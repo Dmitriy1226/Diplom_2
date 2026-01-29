@@ -1,5 +1,6 @@
 package api.client;
 
+import io.qameta.allure.Step;
 import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.given;
@@ -11,6 +12,7 @@ public class AuthClient extends RestClient {
     private static final String USER = "/api/auth/user";
     private static final String LOGOUT = "/api/auth/logout";
 
+    @Step("Регистрация пользователя")
     public Response register(Object body) {
         return given()
                 .spec(baseSpec())
@@ -19,6 +21,7 @@ public class AuthClient extends RestClient {
                 .post(REGISTER);
     }
 
+    @Step("Логин пользователя")
     public Response login(Object body) {
         return given()
                 .spec(baseSpec())
@@ -27,6 +30,7 @@ public class AuthClient extends RestClient {
                 .post(LOGIN);
     }
 
+    @Step("Получение данных пользователя")
     public Response getUser(String accessToken) {
         return given()
                 .spec(authSpec(accessToken))
@@ -34,6 +38,7 @@ public class AuthClient extends RestClient {
                 .get(USER);
     }
 
+    @Step("Обновление данных пользователя")
     public Response patchUser(String accessToken, Object body) {
         return given()
                 .spec(authSpec(accessToken))
@@ -42,6 +47,7 @@ public class AuthClient extends RestClient {
                 .patch(USER);
     }
 
+    @Step("Удаление пользователя")
     public Response deleteUser(String accessToken) {
         return given()
                 .spec(authSpec(accessToken))
@@ -49,6 +55,7 @@ public class AuthClient extends RestClient {
                 .delete(USER);
     }
 
+    @Step("Выход пользователя из системы")
     public Response logout(Object body) {
         return given()
                 .spec(baseSpec())
@@ -57,4 +64,3 @@ public class AuthClient extends RestClient {
                 .post(LOGOUT);
     }
 }
-
