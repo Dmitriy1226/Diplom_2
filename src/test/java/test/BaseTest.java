@@ -7,6 +7,7 @@ import io.restassured.response.Response;
 import model.Credentials;
 import model.User;
 import org.junit.After;
+import org.junit.Before;
 
 import java.util.Random;
 
@@ -19,6 +20,25 @@ public class BaseTest {
     protected String accessToken; // "Bearer ..."
     protected String refreshToken;
 
+    // Пользователь, созданный для теста (если нужен)
+    protected User user;
+
+    /**
+     * Переопредели в тестовом классе и верни true, если этому набору тестов
+     * нужен авторизованный пользователь.
+     */
+    protected boolean isUserRequired() {
+        return false;
+    }
+
+    @Before
+    public void setUp() {
+        if (isUserRequired()) {
+            user = randomUser();
+            registerAndLogin(user);
+        }
+    }
+
     protected User randomUser() {
         int n = new Random().nextInt(1_000_000);
         return new User("dmitry" + n + "@yandex.ru", "password123", "Dmitry");
@@ -26,7 +46,7 @@ public class BaseTest {
 
     protected void registerAndLogin(User user) {
         Response r = authClient.register(user);
-        // достаём токены (в ответе обычно есть accessToken/refreshToken)
+
         accessToken = r.then().extract().path("accessToken");
         refreshToken = r.then().extract().path("refreshToken");
 
@@ -40,7 +60,6 @@ public class BaseTest {
 
     @After
     public void tearDown() {
-        // аккуратно: удаляем пользователя, если успели получить токен
         if (accessToken != null) {
             authClient.deleteUser(accessToken);
         }
