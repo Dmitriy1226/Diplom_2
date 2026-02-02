@@ -37,8 +37,9 @@ public class CreateOrderTest extends BaseTest {
                 .then()
                 .statusCode(400)
                 .body("success", is(false))
-                .body("message", notNullValue());
+                .body("message", equalTo("Ingredient ids must be provided"));
     }
+
 
     @Test
     public void createOrderShouldReturn500WhenIngredientIdIsInvalid() {
