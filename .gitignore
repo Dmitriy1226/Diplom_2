@@ -1,9 +1,4 @@
-     # IntelliJ IDEA
-     .idea/
-     *.iml
-
-     # Maven
-     target/
-
-     # OS
-     .DS_Store
+.idea/
+*.iml
+target/
+.DS_Store
