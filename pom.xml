@@ -56,13 +56,20 @@
       <version>${allure.version}</version>
     </dependency>
 
-
     <!-- Rest Assured -->
     <dependency>
       <groupId>io.rest-assured</groupId>
       <artifactId>rest-assured</artifactId>
       <version>5.4.0</version>
     </dependency>
+
+    <dependency>
+      <groupId>io.qameta.allure</groupId>
+      <artifactId>allure-junit4-aspect</artifactId>
+      <version>${allure.version}</version>
+      <scope>test</scope>
+    </dependency>
+
 
   </dependencies>
 
@@ -76,7 +83,7 @@
         <version>3.2.5</version>
       </plugin>
 
-      <!-- Allure plugin -->
+      <!-- Allure plugin (для генерации отчёта из результатов) -->
       <plugin>
         <groupId>io.qameta.allure</groupId>
         <artifactId>allure-maven</artifactId>
@@ -85,5 +92,6 @@
 
     </plugins>
   </build>
+
 
 </project>
