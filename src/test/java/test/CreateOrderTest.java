@@ -21,7 +21,7 @@ public class CreateOrderTest extends BaseTest {
     }
 
     @Test
-    public void createOrderShouldReturn200WhenValidIngredients() {
+    public void createOrderWithoutAuthShouldReturn200WhenValidIngredients() {
         List<String> ingredientIds = getTwoIngredientIds();
 
         ordersClient.createOrder(new OrderRequest(ingredientIds))
@@ -39,7 +39,6 @@ public class CreateOrderTest extends BaseTest {
                 .body("success", is(false))
                 .body("message", equalTo("Ingredient ids must be provided"));
     }
-
 
     @Test
     public void createOrderShouldReturn500WhenIngredientIdIsInvalid() {

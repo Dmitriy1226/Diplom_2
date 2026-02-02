@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import static org.hamcrest.Matchers.*;
 
+
 public class RegisterTest extends BaseTest {
 
     @Test
@@ -30,7 +31,42 @@ public class RegisterTest extends BaseTest {
                 .then()
                 .statusCode(403)
                 .body("success", is(false))
-                // ревьюер просил проверять ошибку в теле ответа
-                .body("message", notNullValue());
+                .body("message", equalTo("User already exists"));
+    }
+
+    @Test
+    public void registerWithoutEmailShouldReturn403() {
+        User user = randomUser();
+        user.setEmail(null);
+
+        authClient.register(user)
+                .then()
+                .statusCode(403)
+                .body("success", is(false))
+                .body("message", equalTo("Email, password and name are required fields"));
+    }
+
+    @Test
+    public void registerWithoutPasswordShouldReturn403() {
+        User user = randomUser();
+        user.setPassword(null);
+
+        authClient.register(user)
+                .then()
+                .statusCode(403)
+                .body("success", is(false))
+                .body("message", equalTo("Email, password and name are required fields"));
+    }
+
+    @Test
+    public void registerWithoutNameShouldReturn403() {
+        User user = randomUser();
+        user.setName(null);
+
+        authClient.register(user)
+                .then()
+                .statusCode(403)
+                .body("success", is(false))
+                .body("message", equalTo("Email, password and name are required fields"));
     }
 }
